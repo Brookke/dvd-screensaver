@@ -47,7 +47,7 @@ export default class Logo {
       } else if (this.direction === 'sw') {
         this.direction = 'se';
       }
-      this.color = this.colors[Math.floor(Math.random() * this.colors.length)];
+      this.updateColor();
     }
 
     if (this.x >= this.bounds.x.max - this.htmlElement.offsetLeft - this.htmlElement.offsetWidth) {
@@ -56,7 +56,7 @@ export default class Logo {
       } else if (this.direction === 'se') {
         this.direction = 'sw';
       }
-      this.color = this.colors[Math.floor(Math.random() * this.colors.length)];
+      this.updateColor();
     }
 
     if (this.y <= this.bounds.y.min - this.htmlElement.offsetTop) {
@@ -65,7 +65,7 @@ export default class Logo {
       } else if (this.direction === 'nw') {
         this.direction = 'sw';
       }
-      this.color = this.colors[Math.floor(Math.random() * this.colors.length)];
+      this.updateColor();
     }
 
     if (this.y >= this.bounds.y.max - this.htmlElement.offsetTop - this.htmlElement.offsetHeight) {
@@ -74,6 +74,16 @@ export default class Logo {
       } else if (this.direction === 'sw') {
         this.direction = 'nw';
       }
+      this.updateColor();
+    }
+  }
+
+  updateColor() {
+    if (!this.lastColorChange) {
+      this.lastColorChange = Date.now();
+      this.color = this.colors[Math.floor(Math.random() * this.colors.length)];
+    } else if (Date.now() - this.lastColorChange > 333) {
+      this.lastColorChange = Date.now();
       this.color = this.colors[Math.floor(Math.random() * this.colors.length)];
     }
   }
